@@ -1,19 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Meta from './Meta';
 import Header from './Header';
 
-class Page extends React.Component {
-  render() {
-    return (
-      <div>
-        <Meta/>
-        <Header/>
-        <div>
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
-}
+const Page = ({ children }) => {
+  return (
+    <div>
+      <Meta />
+      <Header />
+      <div>{children}</div>
+    </div>
+  );
+};
+
+Page.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Page;
