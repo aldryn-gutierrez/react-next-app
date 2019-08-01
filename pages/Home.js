@@ -60,9 +60,9 @@ class Home extends React.Component {
         >
           <div className="hero-body">
             <div className="container">
-              <h1 className="title">Instrument. Measure. Improve.</h1>
+              <h1 className="title is-size-1 has-text-weight-bold">Go Premium. Be happy.</h1>
               <h2 className="subtitle">
-                Your customers expect perfection. We can help you deliver it.
+                Premium sounds amazing. Enjoy ad-free music on all your devices.
               </h2>
             </div>
           </div>
@@ -71,19 +71,19 @@ class Home extends React.Component {
         <nav className="level" style={{ margin: '50px 0px' }}>
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Tweets</p>
+              <p className="heading">Artists</p>
               <p className="title">3,456</p>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Following</p>
+              <p className="heading">Albums</p>
               <p className="title">123</p>
             </div>
           </div>
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Followers</p>
+              <p className="heading">Downloads</p>
               <p className="title">456K</p>
             </div>
           </div>
