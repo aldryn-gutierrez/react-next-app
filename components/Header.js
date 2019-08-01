@@ -46,11 +46,11 @@ class Header extends React.Component {
               <a className="navbar-item">Home</a>
             </Link>
 
-            <Link href="/Search">
+            <Link href="/search">
               <a className="navbar-item">Search</a>
             </Link>
 
-            <Link href="/Blog">
+            <Link href="/blog">
               <a className="navbar-item">Blog</a>
             </Link>
 
