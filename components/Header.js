@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import Link from 'next/link';
+import axios from 'axios';
 
 class Header extends React.Component {
   state = { isActive: false };
@@ -70,7 +71,10 @@ class Header extends React.Component {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button is-primary">
+                <a
+                  className="button is-primary"
+                  href="https://accounts.spotify.com/authorize?client_id=34191669a70d4f20a7339815af6bea0c&redirect_uri=http://localhost:3000&response_type=token"
+                >
                   <strong>Sign up</strong>
                 </a>
                 <a className="button is-light">Log in</a>

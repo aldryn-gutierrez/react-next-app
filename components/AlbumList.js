@@ -28,7 +28,7 @@ class AlbumList extends React.Component {
         albumArtUrl:
           'https://media.pitchfork.com/photos/5d30e22e1852280008e54091/1:1/w_320/IggyAzalea_InMyDefense.jpg',
         artist: 'Iggy Azalea',
-        title: 'Lion King (2019)',
+        title: 'In My Defense',
       },
       {
         albumArtUrl:
@@ -46,7 +46,7 @@ class AlbumList extends React.Component {
     return (
       <div className="content columns">
         {albums.map(({ albumArtUrl, artist, title }) => (
-          <AlbumCard albumArtUrl={albumArtUrl} artist={artist} title={title} />
+          <AlbumCard key={title} albumArtUrl={albumArtUrl} artist={artist} title={title} />
         ))}
       </div>
     );

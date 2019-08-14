@@ -12,17 +12,26 @@ class Search extends React.Component {
 
   onInputChange = debounce(async event => {
     const artist = event.target.value;
+    const accessToken = localStorage.getItem('token');
+
+    console.log(accessToken);
 
     const spotifyInstance = axios.create({
       baseURL: 'https://api.spotify.com',
       timeout: 1000,
       headers: {
-        Authorization:
-          'Bearer BQCKkwrA0ZFIfLNjh2SA5FxpLKVi6k5-uEtD5pKtW0JdRws0cSJBxW2dIftuQxCFwLo_d1LNogtbTEak1dE',
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    const artistsResponse = await spotifyInstance.get(`/v1/search?q=${artist}&type=artist&limit=8`);
+    const artistsResponse = await spotifyInstance
+      .get(`/v1/search?q=${artist}&type=artist&limit=8`)
+      .catch(async error => {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      });
+
     this.setState({ artists: artistsResponse.data.artists.items });
   }, 800);
 

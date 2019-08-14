@@ -10,6 +10,7 @@ const Meta = () => (
       type="text/css"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
     />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" />
     <title>Bands In Town!</title>
   </Head>
 );

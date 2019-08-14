@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './Home';
 
-const App = () => {
+const App = props => {
   return <Home />;
 };
 
