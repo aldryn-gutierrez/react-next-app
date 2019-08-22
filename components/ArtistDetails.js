@@ -17,13 +17,48 @@ class ArtistDetails extends React.Component {
       images: [],
       genres: [],
     },
+    tracks: [],
   };
 
   componentDidMount() {
-    this.getArtistData(this.props.id);
+    this.getArtistDetails(this.props.id);
+    this.getArtistTracks(this.props.id);
   }
 
-  async getArtistData(artistId) {
+  async getArtistTracks(artistId) {
+    const accessToken = localStorage.getItem('token');
+    console.log('Token2', accessToken)
+    const spotifyInstance = axios.create({
+      baseURL: 'https://api.spotify.com',
+      timeout: 1000,
+      headers: { Authorization: `Bearer ${accessToken}`},
+    });
+
+    const artistTracksResponse = await spotifyInstance
+      .get(`/v1/artists/${artistId}/top-tracks?country=SG`)
+      .catch(async error => {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      });
+  
+    const tracks = artistTracksResponse.data.tracks.map(track => {
+      return {
+        'id': track.id,
+        'title': track.name,
+        'spotifyUrl': track.uri,
+        'albumArt': track.album.images[0].url,
+        'durationInMilliseconds': track.duration_ms,
+        'artists': track.artists.map(artist => artist.name)
+      };
+    });
+
+    console.log(tracks)
+
+    this.setState({...this.state, tracks})
+  }
+
+  async getArtistDetails(artistId) {
     const accessToken = localStorage.getItem('token');
     console.log('Token', accessToken)
     const spotifyInstance = axios.create({
@@ -58,24 +93,21 @@ class ArtistDetails extends React.Component {
   renderBasicInformation(artist) {
     return (
       <div className="container">
-        <p className="title">{artist.name}</p>
-        <p className="subtitle">With an image</p>
-        <figure className="image ">
-          <img className="is-rounded" src={artist.images[0].url} />
-        </figure>
-      </div>
-    );
-  }
-
-  renderGenres(genres) {
-    return (
-      <div className="container">
-        <div className="columns is-desktop has-text-centered">
-          {genres.slice(0, 3).map(genre => (
-            <div className="column is-capitalized" key={genre}>
-              <a className="button is-primary is-large">{genre}</a>
-            </div>
-          ))}
+        <div className="container">
+          <p className="title">{artist.name}</p>
+          <p className="subtitle">With an image</p>
+          <figure className="image ">
+            <img className="is-rounded" src={artist.images[0].url} />
+          </figure>
+        </div>
+        <div className="container" style={{ margin: '30px 0px 10px 0px' }}>
+          <div className="columns is-mobile has-text-centered" >
+            {artist.genres.slice(0, 3).map(genre => (
+              <div className="column is-capitalized" key={genre}>
+                <a className="button is-primary is-large">{genre}</a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -122,16 +154,24 @@ class ArtistDetails extends React.Component {
         <p className="subtitle">Curated daily based on playback</p>
         <div className="content">
           <div className="container">
-            <div className="notification is-info">
-              <div className="columns is-mobile">
-                <div className="column is-one-fifth">
-                  <img src="https://i.scdn.co/image/6441b3a54e720b0fab3646c89ef35869d559414d" />
-                </div>
-                <div className="column">
-                  <p>Lorem Ipsum</p>
-                </div>
-              </div>
-            </div>
+              {
+                this.state.tracks.map(track => (
+                  <div className="box" key={track.id}>
+                    <div className="columns is-mobile">
+                      <div className="column is-one-fifth">
+                        <a target="_blank" href={track.spotifyUrl}>
+                          <img src={track.albumArt} alt={track.spotifyUrl}/>
+                        </a>
+                      </div>
+                      <div className="column">
+                        <span className="has-text-weight-bold">{track.title}</span>{' - '}
+                        <span>{Math.floor((track.durationInMilliseconds/1000)/60)}:{Math.floor(track.durationInMilliseconds/1000 % 60)}</span><br/>
+                        <span>{track.artists.join()}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }      
           </div>
         </div>
       </div>
@@ -150,28 +190,30 @@ class ArtistDetails extends React.Component {
         <div className="container is-fluid">
           <div className="notification">
             <div className="tile is-ancestor">
-              <div className="tile is-vertical is-5">
-                <div className="tile is-parent ">
-                  <article className="tile is-child notification ">
+              <div className="tile is-vertical">
+                <div className="tile is-parent">
+                  <article className="tile is-child box ">
                     {this.renderBasicInformation(artist)}
                   </article>
                 </div>
-
-                <div className="tile is-parent" style={{ margin: '-20px 0px' }}>
-                  <article className="tile is-child notification">
-                    {this.renderGenres(artist.genres)}
-                  </article>
-                </div>
-
                 <div className="tile is-parent">
-                  <article className="tile is-child notification is-info">
+                  <article className="tile is-child box is-info">
                     {this.renderSocialMediaStatistics(artist)}
                   </article>
+                </div>
+                <div className="tile is-parent" style={{visibility: 'hidden'}}>
+                  {/* ADD CONTENT */}
+                </div>
+                <div className="tile is-parent" style={{visibility: 'hidden'}}>
+                  {/* ADD CONTENT */}
+                </div>
+                <div className="tile is-parent" style={{visibility: 'hidden'}}>
+                  {/* ADD CONTENT */}
                 </div>
               </div>
 
               <div className="tile is-parent">
-                <article className="tile is-child notification is-success">
+                <article className="tile is-child box is-success">
                   {this.renderTracks()}
                 </article>
               </div>
