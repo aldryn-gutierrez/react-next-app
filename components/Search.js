@@ -14,8 +14,6 @@ class Search extends React.Component {
     const artist = event.target.value;
     const accessToken = localStorage.getItem('token');
 
-    console.log(accessToken);
-
     const spotifyInstance = axios.create({
       baseURL: 'https://api.spotify.com',
       timeout: 1000,
@@ -31,13 +29,15 @@ class Search extends React.Component {
         console.log(error.response.status);
         console.log(error.response.headers);
       });
+    
+    const artists = (!artistsResponse) ? [] : artistsResponse.data.artists.items;
 
-    this.setState({ artists: artistsResponse.data.artists.items });
+    this.setState({ artists });
   }, 800);
 
   onSearchSelection = selection => {
     Router.push({
-      pathname: '/search',
+      pathname: '/profile',
       query: {
         id: selection.id,
       },
@@ -78,17 +78,13 @@ class Search extends React.Component {
                     })}
                   />
                 </div>
-                <div className="control">
-                  <button className="button is-info" type="submit">
-                    Search
-                  </button>
-                </div>
               </div>
 
               {isOpen && (
                 <DropDown>
-                  {artists.map((artist, index) => {
-                    const artistImageUrl = artist.images.length > 2 ? artist.images[2].url : '';
+                  {
+                    (artists.length > 0) ? (artists.map((artist, index) => {
+                    const artistImageUrl = artist.images.length > 2 ? artist.images[2].url : 'http://placecorgi.com/30/30';
 
                     return (
                       <DropDownItem
@@ -100,7 +96,8 @@ class Search extends React.Component {
                         {artist.name}
                       </DropDownItem>
                     );
-                  })}
+                    })) : <DropDownItem>No Item Found</DropDownItem>
+                  }
                 </DropDown>
               )}
             </div>

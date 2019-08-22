@@ -17,15 +17,17 @@ class Header extends React.Component {
         style={{ minHeight: '6.25rem' }}
       >
         <div className="navbar-brand">
-          <a className="navbar-item" href="https://bulma.io">
-            <img
-              // eslint-disable-next-line max-len
-              src="https://wac-cdn.atlassian.com/dam/jcr:616e6748-ad8c-48d9-ae93-e49019ed5259/Atlassian-horizontal-blue-rgb.svg?cdnVersion=483"
-              width="202"
-              height="28"
-              alt="logo"
-            />
-          </a>
+          <Link href="/">
+            <a className="navbar-item" href="/">
+              <img
+                // eslint-disable-next-line max-len
+                src="https://wac-cdn.atlassian.com/dam/jcr:616e6748-ad8c-48d9-ae93-e49019ed5259/Atlassian-horizontal-blue-rgb.svg?cdnVersion=483"
+                width="202"
+                height="28"
+                alt="logo"
+              />
+            </a>
+          </Link>
           <a
             role="button"
             className={`navbar-burger burger ${isActive ? 'is-active' : ''}`}
@@ -45,10 +47,6 @@ class Header extends React.Component {
           <div className="navbar-start">
             <Link href="/">
               <a className="navbar-item">Home</a>
-            </Link>
-
-            <Link href="/search">
-              <a className="navbar-item">Search</a>
             </Link>
 
             <Link href="/blog">
@@ -75,9 +73,9 @@ class Header extends React.Component {
                   className="button is-primary"
                   href="https://accounts.spotify.com/authorize?client_id=34191669a70d4f20a7339815af6bea0c&redirect_uri=http://localhost:3000&response_type=token"
                 >
-                  <strong>Sign up</strong>
+                  <strong>Log In</strong>
                 </a>
-                <a className="button is-light">Log in</a>
+                <a className="button is-light">Sign up</a>
               </div>
             </div>
           </div>

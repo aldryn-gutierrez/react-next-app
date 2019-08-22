@@ -15,11 +15,12 @@ class Home extends React.Component {
   componentDidMount() {
     const currentToken = localStorage.getItem('token');
 
-    if (!currentToken || true) {
+    console.log('Token', currentToken)
+    if (!currentToken) {
       const { router } = this.props;
       const params = new URLSearchParams(router.asPath.substr(2));
       const accessToken = params.get('access_token');
-
+      
       localStorage.setItem('token', accessToken);
     }
   }
